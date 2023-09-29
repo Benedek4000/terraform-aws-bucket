@@ -66,7 +66,7 @@ resource "aws_s3_bucket_public_access_block" "publicAccess" {
 resource "aws_s3_bucket_versioning" "bucketVersioning" {
   bucket = aws_s3_bucket.bucket.id
   versioning_configuration {
-    status = var.enableVersioning ? "Enabled" : "Disabled"
+    status = var.versioningConfig == {} ? "Disabled" : "Enabled"
   }
 }
 
@@ -88,8 +88,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "versioningBucketConfig" {
     status = aws_s3_bucket_versioning.bucketVersioning.versioning_configuration[0].status
 
     noncurrent_version_expiration {
-      newer_noncurrent_versions = 7
-      noncurrent_days           = 7
+      newer_noncurrent_versions = try(var.versioningConfig.newer_noncurrent_versions, 7)
+      noncurrent_days           = try(var.versioningConfig.noncurrent_days, 7)
     }
   }
 }

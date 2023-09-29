@@ -19,10 +19,10 @@ variable "forceDestroy" {
   description = "Destroy the bucket if not empty."
 }
 
-variable "enableVersioning" {
-  type        = bool
-  default     = false
-  description = "Enables bucket versioning."
+variable "versioningConfig" {
+  type        = map(any)
+  default     = {}
+  description = "Versioning configuration."
 }
 
 variable "customPolicy" {

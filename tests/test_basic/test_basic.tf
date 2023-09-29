@@ -11,7 +11,7 @@ terraform {
 module "basic" {
   source = "../../module"
 
-  bucketName           = "test-basic"
+  bucketName           = "test-basic-1234"
   principalType        = "Service"
   principalIdentifiers = ["ec2.amazonaws.com"]
 }
@@ -22,7 +22,7 @@ resource "test_assertions" "tests" {
   equal "bucketName" {
     description = "bucket name"
     got         = module.basic.bucket.bucket
-    want        = "test-basic"
+    want        = "test-basic-1234"
   }
 
   equal "forceDestroy" {
